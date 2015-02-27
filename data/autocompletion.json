@@ -1,0 +1,20 @@
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 1, "keyword" : "open source search engine", "keyword_ranking" : 20}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 2, "keyword" : "elasticsearch", "keyword_ranking" : 30}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 3, "keyword" : "elasticsearch vs solr", "keyword_ranking" : 10}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 4, "keyword" : "lucene based search engine", "keyword_ranking" : 10}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 5, "keyword" : "elasticsearch based on lucene", "keyword_ranking" : 10}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 6, "keyword" : "distributed search engine", "keyword_ranking" : 10}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 7, "keyword" : "real time search engine", "keyword_ranking" : 10}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 8, "keyword" : "exploring elasticsearch", "keyword_ranking" : 40}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 9, "keyword" : "elasticsearch server", "keyword_ranking" : 10}
+{ "index" : { "_index" : "autocompletion", "_type" : "search_keyword" } }
+{ "keyword_id" : 10, "keyword" : "server engine", "keyword_ranking" : 10}

@@ -1,0 +1,55 @@
+# bidding keyword monitoring
+curl -XPUT 'http://localhost:9200/autionc_bidding_percolate/.percolator/sepecial-order' -d '{
+	"query" : {
+		"match" : {
+			"bidding_keyword" : {
+				"query" : "special order",
+				"operator" : "and"
+			}
+		}
+	}
+}'
+
+curl -XPUT 'http://localhost:9200/autionc_bidding_percolate/.percolator/over-price' -d '{
+	"query" : {
+		"match" : {
+			"bidding_keyword" : {
+				"query" : "over price",
+				"operator" : "and"
+			}
+		}
+	}
+}'
+
+curl -XPUT 'http://localhost:9200/autionc_bidding_percolate/.percolator/reserved-order' -d '{
+	"query" : {
+		"match" : {
+			"bidding_keyword" : {
+				"query" : "reserved order",
+				"operator" : "and"
+			}
+		}
+	}
+}'
+
+# bidding price monitoring by auction id
+curl -XPUT 'http://localhost:9200/autionc_bidding_percolate/.percolator/auction-1' -d '{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "term": {
+                        "auction_id": 1
+                    }
+                },
+                {
+                    "range": {
+                        "bidding_price": {
+                            "gt": 10000000
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}'

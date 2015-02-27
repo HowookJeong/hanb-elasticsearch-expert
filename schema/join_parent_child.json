@@ -1,0 +1,96 @@
+// 본 스키마 구성은 구매자와 구매 물품간의 관계를 구성하기 위해 작성 하였다.
+// 구매자 메타 정보를 이용해서 구매한 물품 목록을 검색하기 위한 목적이다.
+// 구매 상품 등록 색인 시 parent type 에는 구매 상품 정보를 등록해 주어야 하고 child type 에는 parent type 에 등록한 _id 값에 해당하는 값을 _parent 필드에 추가 하여 색인해 주어야 한다.
+{
+	"settings" : {
+		"number_of_shards" : 3,
+	    "number_of_replicas" : 0,
+	    "index" : {
+	        "analysis": {
+		        "filter": {
+		            "english_stop": {
+			            "type":       "stop",
+			            "stopwords":  "_english_"
+		            }
+		        },
+		        "analyzer": {
+		            "common_analyzer": {
+			            "tokenizer":  "standard",
+			            "filter": [
+				            "cjk_width",
+				            "lowercase",
+				            "english_stop"
+			            ]
+		            }
+		        }
+		    },
+	        "store" : {
+	            "type" : "mmapfs",
+	            "compress" : {
+	                "stored" : true,
+	                "tv" : true
+	            }
+	        }
+	    }
+	},
+	"mappings" : {
+		"buyer_item" : {
+			"_id" : {
+				"index" : "not_analyzed",
+				"path" : "buyer_item_id"
+			},
+			"_source" : {
+				"enabled" : "true"
+			},
+			"_all" : {
+				"enabled" : "false"
+			},
+			"_timestamp" : {
+				"enabled" : true,
+				"format" : "dateTime"
+			},
+			"analyzer" : "common_analyzer",
+			"index_analyzer" : "common_analyzer",
+			"search_analyzer" : "common_analyzer",
+			"properties" : {
+				"buyer_item_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"item_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"item_name" : {"type" : "string", "store" : "yes", "index" : "no", "include_in_all" : false},
+				"buy_date" : {
+					"type" : "date", "format" : "yyyyMMddHHmmss", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false,
+					"fields" : {
+						"buy_date_search" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+					}
+					
+				},
+				"item_price" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"order_price" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+			}
+		},
+		"buyer" : {	// 검색 전용 doc type.
+			"_parent" : {
+				"type" : "buyer_item" // parent type 의 _id 값을 저장해야 함.
+			},
+			"_id" : {
+				"index" : "not_analyzed",
+				"path" : "buyer_id"
+			},
+			"_source" : {
+				"enabled" : "true"
+			},
+			"_all" : {
+				"enabled" : "false"
+			},
+			"analyzer" : "common_analyzer",
+			"index_analyzer" : "common_analyzer",
+			"search_analyzer" : "common_analyzer",
+			"properties" : {
+	        	"buyer_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+	        	"buyer_login_id" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+	        	"buyer_name" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "docs", "include_in_all" : false},
+	        	"buyer_sex" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "docs", "include_in_all" : false},
+	        	"buyer_phone" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "docs", "include_in_all" : false}
+	        }
+		}
+	}
+}

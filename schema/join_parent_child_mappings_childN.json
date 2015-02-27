@@ -1,0 +1,38 @@
+{
+	"buyer_item" : {
+		"_parent" : {
+			"type" : "buyer"
+		},
+		"_id" : {
+			"index" : "not_analyzed",
+			"path" : "buyer_item_id"
+		},
+		"_source" : {
+			"enabled" : "true"
+		},
+		"_all" : {
+			"enabled" : "false"
+		},
+		"_timestamp" : {
+			"enabled" : true,
+			"format" : "dateTime"
+		},
+		"analyzer" : "common_analyzer",
+		"index_analyzer" : "common_analyzer",
+		"search_analyzer" : "common_analyzer",
+		"properties" : {
+			"buyer_item_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+			"item_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+			"item_name" : {"type" : "string", "store" : "yes", "index" : "no", "include_in_all" : false},
+			"buy_date" : {
+				"type" : "date", "format" : "yyyyMMddHHmmss", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false,
+				"fields" : {
+					"buy_date_search" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+				}
+				
+			},
+			"item_price" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+			"order_price" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+		}
+	}
+}

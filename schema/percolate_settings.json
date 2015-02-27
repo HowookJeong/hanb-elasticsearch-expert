@@ -1,0 +1,21 @@
+{
+	"number_of_shards" : 3,
+    "number_of_replicas" : 0,
+    "index" : {
+        "analysis" : {
+            "analyzer" : {
+                "whitespace_analyzer" : {
+                    "type" : "whitespace",
+                    "filter" : ["lowercase", "trim"]
+                }
+            }
+        },
+        "store" : {
+            "type" : "mmapfs",
+            "compress" : {
+                "stored" : true,
+                "tv" : true
+            }
+        }
+    }
+}

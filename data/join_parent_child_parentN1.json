@@ -1,0 +1,2 @@
+{ "index" : { "_index" : "join_parent_child", "_type" : "buyer_item" } }
+{"buyer_item_id" : 1,"item_id" : 1,"item_name" : "스캇 자전거","buy_date" : "20140611121212","item_price" : 200000,"order_price" : 195000}

@@ -1,0 +1,163 @@
+# installation flow
+# step1~4 까지 완료 된 이후에는 river 에 등록한 river indice 의 삭제 및 재생성은 기능 동작 오류에 영향을 미치지 않는다.
+# jdbc river 에서 제일 중요한 것은 색인 한 데이터와 그렇지 않은 데이터에 대한 구분과 관리를 어떻게 할 것인가가 매우 중요함.
+# 색인 요청이 된 문서들에 대해서는 다시 fetch 해 오지 않도록 관리가 필요함.
+# jdbc river 의 경우 event driven 방식이 아닌 procedure 한 방식으로 대량의 데이터에 대한 기록 및 분석에는 적절하지 않음.
+# jdbc river 는 현재 master 로 선출된 노드에서 동작 하며, 클러스터 환경에서는 failover 구성을 위햇 모든 노드에 plugin 을 설치해 두어야 한다.
+# 클러스터 환경에서 master node 가 죽거나 다른 node 로 master 권한이 바뀌게 되면 river 동작은 master 권한을 가진 노드에서 동작을 한다.
+# 하지만, 죽었던 노드가 다시 살아 나고 해당 노드에 river plugin 이 설치가 되어 있을 경우 river action에 대한 cronjob 이 분산되어 동작 할 수도 있다.
+# 예) node1 에서 select 동작, node2 에서 update 동작.
+step 1. create database/table
+step 2. create index
+step 3. create river
+step 4. insert data to database
+
+# installation
+# river install
+https://github.com/jprante/elasticsearch-river-jdbc
+bin/plugin --install jdbc --url http://xbib.org/repository/org/xbib/elasticsearch/plugin/elasticsearch-river-jdbc/1.3.4.4/elasticsearch-river-jdbc-1.3.4.4-plugin.zip
+
+# mysql jdbc driver install
+curl http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.31.tar.gz
+curl -o mysql-connector-java-5.1.31.zip -L 'http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.31.zip/from/http://cdn.mysql.com/'
+# plugins/jdbc/ 아래로 mysql connector jar 파일 저장.
+mv ./mysql-connector-java-5.1.31/mysql-connector-java-5.1.31-bin.jar .
+
+# index settings/mappings
+{
+	"settings" : {
+		"number_of_shards" : 3,
+	    "number_of_replicas" : 0,
+	    "index" : {
+	    	"refresh_interval" : "1s",
+	        "analysis": {
+		        "filter": {
+		            "english_stop": {
+			            "type":       "stop",
+			            "stopwords":  "_english_"
+		            }
+		        },
+		        "analyzer": {
+		            "common_analyzer": {
+			            "tokenizer":  "standard",
+			            "filter": [
+				            "cjk_width",
+				            "lowercase",
+				            "english_stop"
+			            ]
+		            }
+		        }
+		    },
+	        "store" : {
+	            "type" : "mmapfs",
+	            "compress" : {
+	                "stored" : true,
+	                "tv" : true
+	            }
+	        }
+	    }
+	},
+	"mappings" : {
+		"tbl_item_increment" : {
+			"_id" : {
+				"index" : "not_analyzed",
+				"path" : "item_id"
+			},
+			"_source" : {
+				"enabled" : "true"
+			},
+			"_all" : {
+				"enabled" : "false"
+			},
+			"analyzer" : "common_analyzer",
+			"index_analyzer" : "common_analyzer",
+			"search_analyzer" : "common_analyzer",
+			"properties" : {
+				"item_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"item_code" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"item_name" : {"type" : "string", "store" : "no", "index" : "analyzed", "omit_norms" : true, "index_options" : "offsets", "include_in_all" : false},
+				"item_price" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"regdate" : {
+					"type" : "date", "format" : "yyyyMMddHHmmss", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false,
+					"fields" : {
+						"regdate_search" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+					}
+				}
+	        }
+		}
+	}
+}
+
+# river register
+curl -XPUT 'localhost:9200/_river/jdbc_mysql/_meta' -d '{
+    "type" : "jdbc",
+    "jdbc" : {
+        "url" : "jdbc:mysql://localhost:3306/test",
+        "user" : "root",
+        "password" : "",
+        "sql" : "SELECT item_id, item_code, item_name, price, regdate FROM TBL_ITEM_INCREMEN WHERE ts BETWEEN NOW() - 30 AND NOW() ANd fetch_flag = 'F'",
+        "index" : "river_jdbc_mysql",	# default jdbc
+        "type" : "tbl_item_increment",		# default jdbc
+        "strategy" : "simple",
+        "schedule" : null,
+        "cronpoolsize" : 4,
+        "rounding" : null,
+        "scale" : 2,
+        "ignore_null" : false,
+        "autocommit" : false,
+        "fetchsize" : 10, /* Integer.MIN for MySQL */
+        "max_rows" : 0,
+        "max_retries" : 3,
+        "max_retries_wait" : "30s",
+        "locale" : Locale.getDefault().toLanguageTag(),
+        "timezone" : TimeZone.getDefault(),
+        "index_settings" : null,
+        "type_mapping" : null,
+        "maxbulkactions" : 1000,
+        "maxconcurrentbulkactions" : 4 * available CPU cores,
+    }
+}'
+
+# river로 연결해 놓은 인덱스를 삭제한 후 다시 생성 할 경우 기존 session 이 유효하지 않게 되어 정상적으로 river 동작이 되지 않음.
+# schedule 작성 문법은 quartz schedule 문법을 따름.
+# mysql 에서 river 로 이미 전달된 데이터를 삭제 하게 되면 그 시점 부터 sync 가 깨지기 때문에 river 가 정상적으로 동작 하지 않음.
+# river 재시작은 단순 _river 인덱스에 대한 close/open 으로 재시작 됨.
+# 
+curl -XPUT 'localhost:9200/_river/jdbc_mysql_fetch/_meta' -d '{
+    "type" : "jdbc",
+    "jdbc" : {
+        "url" : "jdbc:mysql://localhost:3306/test",
+        "user" : "root",
+        "password" : "",
+        "sql" : [
+            {
+                "statement" : "SELECT item_id, item_code, item_name, price, regdate FROM TBL_ITEM_INCREMENT WHERE fetch_flag = ? LIMIT 0, 2",
+                "parameter" : ["F"],
+                "callable" : false
+            }
+        ],
+        "index" : "river_jdbc_mysql",
+        "type" : "tbl_item_increment",
+        "schedule" : "0 0-59 0-23 ? * *"
+    }
+}'
+
+curl -XPUT 'localhost:9200/_river/jdbc_mysql_update/_meta' -d '{
+    "type" : "jdbc",
+    "jdbc" : {
+        "url" : "jdbc:mysql://localhost:3306/test",
+        "user" : "root",
+        "password" : "",
+        "sql" : [
+            {
+                "statement" : "UPDATE (SELECT * FROM TBL_ITEM_INCREMENT WHERE fetch_flag=? LIMIT 0,2) src, TBL_ITEM_INCREMENT dest SET dest.fetch_flag=? WHERE dest.item_id=tbl.item_id",
+                "parameter" : ["F", "T"],
+                "callable" : false,
+                "write" : true
+            }
+        ],
+        "index" : "river_jdbc_mysql",
+        "type" : "tbl_item_increment",
+        "schedule" : "0 0-59 0-23 ? * *"
+    }
+}'

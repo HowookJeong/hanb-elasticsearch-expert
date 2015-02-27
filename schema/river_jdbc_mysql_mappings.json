@@ -1,0 +1,29 @@
+{
+	"tbl_item_increment" : {
+		"_id" : {
+			"index" : "not_analyzed",
+			"path" : "item_id"
+		},
+		"_source" : {
+			"enabled" : "true"
+		},
+		"_all" : {
+			"enabled" : "false"
+		},
+		"analyzer" : "common_analyzer",
+		"index_analyzer" : "common_analyzer",
+		"search_analyzer" : "common_analyzer",
+		"properties" : {
+			"item_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+			"item_code" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+			"item_name" : {"type" : "string", "store" : "no", "index" : "analyzed", "omit_norms" : true, "index_options" : "offsets", "include_in_all" : false},
+			"item_price" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+			"regdate" : {
+				"type" : "date", "format" : "yyyyMMddHHmmss", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false,
+				"fields" : {
+					"regdate_search" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+				}
+			}
+        }
+	}
+}

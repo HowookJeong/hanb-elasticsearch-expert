@@ -1,0 +1,126 @@
+# Facets are deprecated and will be removed in a future release. You are encouraged to migrate to aggregations instead.
+facet 은 컨텍스트 셋 문서를 가진 데이터를 aggregate 하는 가장 좋은 방법을 제공 한다.
+
+bucketing
+	key 와 document 특징으로 구성되며 분석 역할.
+	
+metric
+	통계 역할.
+	
+// structuring aggregations [http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations.html]
+"aggregations" : {
+    "<aggregation_name>" : {
+        "<aggregation_type>" : {
+            <aggregation_body>
+        }
+        [,"aggregations" : { [<sub_aggregation>]+ } ]?
+    }
+    [,"<aggregation_name_2>" : { ... } ]*
+}
+
+metrics aggregations
+	numeric metrics aggregation
+
+bucket aggregations
+	document bucket aggregation
+	
+# sub aggregation
+	parent aggregation 에 대한 결과를 기반으로 추가 aggregation 실행.
+	
+# aggregations
+	global
+	filter
+	nested
+	reverse nested
+	
+# modeling
+	numeric field : min, max, sum, avg, stats, extended_stats, percentiles(분포도), range, histogram
+	string or numeric field : value_count, cardinality(distinct values/terms), missing(set value null), terms, significant terms
+	date field : date range, date histogram
+	ipv4 field : ipv4 range
+	geo point field : geo histogram, geohash grid
+
+	상품코드 : item_code
+	상품명 : item_name
+	상품분류 : item_category
+	구매자아이디 : buyer_id
+	구매자성별 : buyer_gender
+	구매자위치 : buyer_location
+	구매자나라 : buyer_country
+	결제금액 : payment_price
+	결제유형 : payment_type
+	결제시간 : payment_time
+
+{
+	"settings" : {
+		"number_of_shards" : 3,
+	    "number_of_replicas" : 0,
+	    "index" : {
+	        "analysis": {
+		        "filter": {
+		            "english_stop": {
+			            "type":       "stop",
+			            "stopwords":  "_english_"
+		            }
+		        },
+		        "analyzer": {
+		            "common_analyzer": {
+			            "tokenizer":  "standard",
+			            "filter": [
+				            "cjk_width",
+				            "lowercase",
+				            "english_stop"
+			            ]
+		            }
+		        }
+		    },
+	        "store" : {
+	            "type" : "mmapfs",
+	            "compress" : {
+	                "stored" : true,
+	                "tv" : true
+	            }
+	        }
+	    }
+	},
+	"mappings" : {
+		"transactions" : {
+			"_id" : {
+				"index" : "not_analyzed",
+				"path" : "tx_id"
+			},
+			"_source" : {
+				"enabled" : "true"
+			},
+			"_all" : {
+				"enabled" : "false"
+			},
+			"_timestamp" : {
+				"enabled" : true,
+				"format" : "dateTime"
+			},
+			"analyzer" : "common_analyzer",
+			"index_analyzer" : "common_analyzer",
+			"search_analyzer" : "common_analyzer",
+			"properties" : {
+				"tx_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"item_code" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "include_in_all" : false},
+				"item_name" : {"type" : "string", "store" : "no", "index" : "analyzed", "index_options" : "offsets", "include_in_all" : false},
+				"item_category" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "include_in_all" : false},
+				"buyer_id" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "include_in_all" : false},
+				"buyer_gender" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "include_in_all" : false},
+				"buyer_location" : {
+					"properties" : {
+						"location" : {
+							"type" : "geo_point", "lat_lon" : true, "geohash" : true
+						}
+					}
+				},
+				"buyer_country" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "include_in_all" : false},
+				"payment_price" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+				"payment_type" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "include_in_all" : false},
+				"payment_time" : {"type" : "date", "format" : "yyyyMMddHHmmss", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+			}
+		}
+	}
+}

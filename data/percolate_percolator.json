@@ -1,0 +1,8 @@
+{"percolate" : {"index" : "percolate", "type" : "auction"}}
+{"doc" : {"bidding_keyword" : "special order"}}
+{"percolate" : {"index" : "percolate", "type" : "auction"}}
+{"doc" : {"bidding_keyword" : "especially order"}}
+{"percolate" : {"index" : "percolate", "type" : "auction"}}
+{"doc" : {"bidding_keyword" : "spacial order"}}
+{"percolate" : {"index" : "percolate", "type" : "auction", "id" : 1}}
+{}

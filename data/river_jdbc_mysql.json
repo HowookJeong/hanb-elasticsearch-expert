@@ -1,0 +1,32 @@
+# create table
+DROP TABLE IF EXISTS `test`.`TBL_ITEM_INCREMENT`;
+
+CREATE TABLE IF NOT EXISTS `test`.`TBL_ITEM_INCREMENT` (
+  `item_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `item_code` VARCHAR(45) NOT NULL,
+  `item_name` VARCHAR(45) NOT NULL,
+  `price` BIGINT NOT NULL,
+  `regdate` DATETIME NOT NULL,
+  `ts` TIMESTAMP NOT NULL,
+  `fetch_flag` CHAR(1) NOT NULL DEFAULT 'F',
+  PRIMARY KEY (`item_id`),
+  UNIQUE INDEX `item_id_UNIQUE` (`item_id` ASC),
+  INDEX `regdate_idx` (`regdate` ASC),
+  INDEX `fetch_idx` (`ts` ASC, `fetch_flag` ASC))
+DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI 
+ENGINE = InnoDB;
+
+# sample data
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA001', '비싼 자전거', 10000000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA002', '싼 자전거', 10000000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA003', '최신 자전거', 1000000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA004', '구형 자전거', 120000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA005', '추가 자전거', 700000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA006', '기발난 자전거', 140000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA007', '대나무 자전거', 500000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA008', '세발 자전거', 300000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA009', '두발 자전거', 200000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA010', '외발 자전거', 2500000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA011', '네발 자전거', 2500000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA012', '연지 자전거', 2520000, now());
+insert into tbl_item_increment(`item_code`, `item_name`, `price`, `regdate`) values('AA013', '아빠 자전거', 2530000, now());

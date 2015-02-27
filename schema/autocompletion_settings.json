@@ -1,0 +1,69 @@
+{
+    "number_of_shards" : 3,
+    "number_of_replicas" : 0,
+    "index" : {
+        "analysis" : {
+            "analyzer" : {
+                "patten_analyzer" : {
+                    "type" : "custom",
+                    "tokenizer" : "pattern_tokenizer",
+                    "filter" : ["lowercase", "trim"]
+                },
+                "ngram_analyzer" : {
+                    "type" : "custom",
+                    "tokenizer" : "ngram_tokenizer",
+                    "filter" : ["lowercase", "trim"]
+                },
+                "edge_ngram_analyzer" : {
+                	"type" : "custom",
+                    "tokenizer" : "edge_ngram_tokenizer",
+                    "filter" : ["lowercase", "trim"]
+                },
+                "edge_ngram_analyzer_back" : {
+                	"type" : "custom",
+                    "tokenizer" : "edge_ngram_tokenizer",
+                    "filter" : ["lowercase", "trim", "edge_ngram_filter_back"]
+                }
+            },
+            "tokenizer" : {
+                "ngram_tokenizer" : {
+                    "type" : "nGram",
+                    "min_gram" : "1",
+                    "max_gram" : "5",
+                    "token_chars": [ "letter", "digit", "punctuation", "symbol" ]
+                },
+                "edge_ngram_tokenizer" : {
+                    "type" : "edgeNGram",
+                    "min_gram" : "1",
+                    "max_gram" : "5",
+                    "token_chars": [ "letter", "digit", "punctuation", "symbol" ]
+                },
+                "pattern_tokenizer" : {
+                    "type" : "pattern",
+                    "pattern" : ","
+                }
+            },
+            "filter" : {
+            	"edge_ngram_filter_front" : {
+            		"type" : "edgeNGram",
+            		"min_gram" : "1",
+                    "max_gram" : "5",
+                    "side" : "front"
+            	},
+            	"edge_ngram_filter_back" : {
+            		"type" : "edgeNGram",
+            		"min_gram" : "1",
+                    "max_gram" : "5",
+                    "side" : "back"
+            	}
+            }
+        },
+        "store" : {
+            "type" : "mmapfs",
+            "compress" : {
+                "stored" : true,
+                "tv" : true
+            }
+        }
+    }
+}

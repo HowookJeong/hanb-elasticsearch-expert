@@ -1,0 +1,78 @@
+[hive 설치]
+https://cwiki.apache.org/confluence/display/Hive/GettingStarted
+http://blog.beany.co.kr/archives/1519
+
+./hadoop fs -mkdir /tmp
+./hadoop fs -mkdir /user/hive/warehouse
+./hadoop fs -chmod g+w /tmp
+./hadoop fs -chmod g+w /user/hive/warehouse
+
+hive download
+
+cd hive/conf
+cp hive-log4j.properties.template hive-log4j.properties
+vi hive-site.xml
+	<?xml version="1.0"?>
+	<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+	<configuration>
+	<!--
+	    <property>
+	        <name>fs.default.name</name>
+	        <value>hdfs://localhost:9000</value>
+	    </property>
+	-->
+		<property>
+	        <name>javax.jdo.option.ConnectionURL</name>
+	        <value>jdbc:mysql://localhost:3306/metastore_db?createDatabaseIfNotExist=true</value>
+	    </property>
+	    <property>
+	        <name>javax.jdo.option.ConnectionDriverName</name>
+	        <value>com.mysql.jdbc.Driver</value>
+	    </property>
+	    <property>
+	        <name>javax.jdo.option.ConnectionUserName</name>
+	        <value>hive</value>
+	    </property>
+		<property>
+	        <name>javax.jdo.option.ConnectionPassword</name>
+	        <value>hive</value>
+	    </property>
+	    <property>
+	        <name>datanucleus.autoCreateSchema</name>
+	        <value>true</value>
+	    </property>
+		<property>
+			<name>hive.aux.jars.path</name>
+			<value>/user/elasticsearch/lib/elasticsearch-hadoop-2.0.0.jar</value>
+			<description>A comma separated list (with no spaces) of the jar files(must be added to hdfs)</description>
+		</property>
+		<property>
+			<name>hive.metastore.warehouse.dir</name>
+			<value>/user/hive/warehouse</value>
+			<description>location of default database for the warehouse</description>
+		</property>
+	</configuration>
+	
+cd hive-0.12.0/scripts/metastore/upgrade/mysql
+
+mysql CLI 접속.
+	create database metastore_db;
+	use metastore_db;
+	source /Users/hwjeong/server/app/hive-0.12.0/scripts/metastore/upgrade/mysql/hive-schema-0.9.0.mysql.sql
+
+hive server실행.
+	bin/hive --service hiveserver
+
+integration
+	http://www.elasticsearch.org/guide/en/elasticsearch/hadoop/current/hive.html
+	
+https://cwiki.apache.org/confluence/display/Hive/HiveClient
+
+[Hive 연동로직]
+- indexing
+	step 1. hive 로 데이터 적재.
+	step 2. hive 에 적재 된 데이터를 select 하여 es 로 색인.
+- searching
+	step 1. 검색 결과를 저장하기 위해 hive 에 테이블 생성. (테이블 생성 전 반드시 기존 테이블을 drop 해야함.)
+	step 2. 테이블 생성 시 검색 질의 작성 하여 생성. (테이블 생성과 함께 검색엔진에 질의를 실행 하고 결과를 hive 로 저장하게 된다.)
+	step 3. hive 쿼리를 이용하여 검색 결과가 저장된 테이블로 질의.

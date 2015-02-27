@@ -1,0 +1,8 @@
+{ "index" : { "_index" : "join_parent_child2", "_type" : "buyer_item", "_parent" : 1 } }
+{"buyer_item_id" : 1,"item_id" : 1,"item_name" : "스캇 자전거","buy_date" : "20140611121212","item_price" : 750000,"order_price" : 600000}
+{ "index" : { "_index" : "join_parent_child2", "_type" : "buyer_item", "_parent" : 1 } }
+{"buyer_item_id" : 2,"item_id" : 2,"item_name" : "자전거 트레일러","buy_date" : "20140612121212","item_price" : 340000,"order_price" : 195000}
+{ "index" : { "_index" : "join_parent_child2", "_type" : "buyer_item", "_parent" : 2} }
+{"buyer_item_id" : 3,"item_id" : 2,"item_name" : "자전거 트레일러","buy_date" : "20140611121212","item_price" : 340000,"order_price" : 195000}
+{ "index" : { "_index" : "join_parent_child2", "_type" : "buyer_item", "_parent" : 2} }
+{"buyer_item_id" : 4,"item_id" : 3,"item_name" : "비싼 자전거","buy_date" : "20130610121212","item_price" : 7500000,"order_price" : 1000000}

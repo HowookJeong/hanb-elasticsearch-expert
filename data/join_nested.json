@@ -1,0 +1,4 @@
+{ "index" : { "_index" : "join_nested", "_type" : "purchase_history"} }
+{ "buyer_id" : 1,"buyer_login_id" : "jjeong","buyer_name" : "헨리","buyer_sex" : "M","buyer_phone" : "01019931974", "buyer_items" : [ {"item_id" : 1,"item_name" : "스캇 자전거","purchase_date" : "20140611121212","item_price" : 750000,"order_price" : 600000}, {"item_id" : 2,"item_name" : "자전거 트레일러","purchase_date" : "20140612121212","item_price" : 340000,"order_price" : 195000} ] }
+{ "index" : { "_index" : "join_nested", "_type" : "purchase_history"} }
+{ "buyer_id" : 2,"buyer_login_id" : "atie","buyer_name" : "애띠","buyer_sex" : "F","buyer_phone" : "01020011982", "buyer_items" : [ {"item_id" : 2,"item_name" : "자전거 트레일러","purchase_date" : "20140611121212","item_price" : 340000,"order_price" : 195000}, {"item_id" : 3,"item_name" : "비싼 자전거","purchase_date" : "20130610121212","item_price" : 7500000,"order_price" : 1000000} ] }

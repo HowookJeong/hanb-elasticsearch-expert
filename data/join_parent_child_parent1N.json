@@ -1,0 +1,4 @@
+{ "index" : { "_index" : "join_parent_child2", "_type" : "buyer"} }
+{"buyer_id" : 1,"buyer_login_id" : "jjeong","buyer_name" : "헨리","buyer_sex" : "M","buyer_phone" : "01019931974"}
+{ "index" : { "_index" : "join_parent_child2", "_type" : "buyer"} }
+{"buyer_id" : 2,"buyer_login_id" : "atie","buyer_name" : "애띠","buyer_sex" : "F","buyer_phone" : "01020011982"}

@@ -1,0 +1,24 @@
+{
+	"buyer" : {
+		"_id" : {
+			"index" : "not_analyzed",
+			"path" : "buyer_id"
+		},
+		"_source" : {
+			"enabled" : "true"
+		},
+		"_all" : {
+			"enabled" : "false"
+		},
+		"analyzer" : "common_analyzer",
+		"index_analyzer" : "common_analyzer",
+		"search_analyzer" : "common_analyzer",
+		"properties" : {
+        	"buyer_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+        	"buyer_login_id" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "docs", "include_in_all" : false},
+        	"buyer_name" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "docs", "include_in_all" : false},
+        	"buyer_sex" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "docs", "include_in_all" : false},
+        	"buyer_phone" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "docs", "include_in_all" : false}
+        }
+	}
+}

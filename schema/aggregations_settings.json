@@ -1,0 +1,32 @@
+{
+	"number_of_shards" : 3,
+    "number_of_replicas" : 0,
+    "index" : {
+    	"refresh_interval" : "60s",
+        "analysis": {
+	        "filter": {
+	            "english_stop": {
+		            "type":       "stop",
+		            "stopwords":  "_english_"
+	            }
+	        },
+	        "analyzer": {
+	            "common_analyzer": {
+		            "tokenizer":  "standard",
+		            "filter": [
+			            "cjk_width",
+			            "lowercase",
+			            "english_stop"
+		            ]
+	            }
+	        }
+	    },
+        "store" : {
+            "type" : "mmapfs",
+            "compress" : {
+                "stored" : true,
+                "tv" : true
+            }
+        }
+    }
+}

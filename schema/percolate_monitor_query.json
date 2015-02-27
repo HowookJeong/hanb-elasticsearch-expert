@@ -1,0 +1,9 @@
+# bidding price/keyword monitoring
+curl -XGET 'http://localhost:9200/autionc_bidding_percolate/.percolator/_percolate' -d '{
+	"doc" : {
+		"auction_id" : 1,
+		"bidding_id" : 6,
+		"bidding_price" : 2560000000,
+		"bidding_keyword" : "special order"
+	}
+}'

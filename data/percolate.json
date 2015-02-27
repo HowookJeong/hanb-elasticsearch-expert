@@ -1,0 +1,10 @@
+{ "index" : { "_index" : "percolate", "_type" : "auction" } }
+{ "bidding_id" : 1, "auction_id" : 1, "bidding_price" : 1000000, "bidding_keyword" : "special order"}
+{ "index" : { "_index" : "percolate", "_type" : "auction" } }
+{ "bidding_id" : 2, "auction_id" : 1, "bidding_price" : 2000000, "bidding_keyword" : "reserved order"}
+{ "index" : { "_index" : "percolate", "_type" : "auction" } }
+{ "bidding_id" : 3, "auction_id" : 1, "bidding_price" : 1500000, "bidding_keyword" : "general order"}
+{ "index" : { "_index" : "percolate", "_type" : "auction" } }
+{ "bidding_id" : 4, "auction_id" : 1, "bidding_price" : 3000000, "bidding_keyword" : "general order"}
+{ "index" : { "_index" : "percolate", "_type" : "auction" } }
+{ "bidding_id" : 5, "auction_id" : 1, "bidding_price" : 11000000, "bidding_keyword" : "over price order"}

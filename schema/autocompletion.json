@@ -1,0 +1,109 @@
+{
+    "settings" : {
+        "number_of_shards" : 3,
+        "number_of_replicas" : 0,
+        "index" : {
+            "analysis" : {
+                "analyzer" : {
+                    "common_analyzer" : {
+                        "type" : "cjk",
+                        "filter" : ["lowercase", "trim"]
+                    },
+                    "patten_analyzer" : {
+                        "type" : "custom",
+                        "tokenizer" : "pattern_tokenizer",
+                        "filter" : ["lowercase", "trim"]
+                    },
+                    "ngram_analyzer" : {
+                        "type" : "custom",
+                        "tokenizer" : "ngram_tokenizer",
+                        "filter" : ["lowercase", "trim"]
+                    },
+                    "edge_ngram_analyzer" : {
+                        "type" : "custom",
+                        "tokenizer" : "edge_ngram_tokenizer",
+                        "filter" : ["lowercase", "trim"]
+                    },
+                    "edge_ngram_analyzer_reverse" : {
+                        "type" : "custom",
+                        "tokenizer" : "edge_ngram_tokenizer",
+                        "filter" : ["lowercase", "trim", "reverse"]
+                    },
+                    "edge_ngram_analyzer_back" : {
+                        "type" : "custom",
+                        "tokenizer" : "edge_ngram_tokenizer",
+                        "filter" : ["lowercase", "trim", "edge_ngram_filter_back"]
+                    }
+                },
+                "tokenizer" : {
+                    "ngram_tokenizer" : {
+                        "type" : "nGram",
+                        "min_gram" : "1",
+                        "max_gram" : "5",
+                        "token_chars": [ "letter", "digit", "punctuation", "symbol" ]
+                    },
+                    "edge_ngram_tokenizer" : {
+                        "type" : "edgeNGram",
+                        "min_gram" : "1",
+                        "max_gram" : "5",
+                        "token_chars": [ "letter", "digit", "punctuation", "symbol" ]
+                    },
+                    "pattern_tokenizer" : {
+                        "type" : "pattern",
+                        "pattern" : ","
+                    }
+                },
+                "filter" : {
+                    "edge_ngram_filter_front" : {
+                        "type" : "edgeNGram",
+                        "min_gram" : "1",
+                        "max_gram" : "5",
+                        "side" : "front"
+                    },
+                    "edge_ngram_filter_back" : {
+                        "type" : "edgeNGram",
+                        "min_gram" : "1",
+                        "max_gram" : "5",
+                        "side" : "back"
+                    }
+                }
+            },
+            "store" : {
+                "type" : "mmapfs",
+                "compress" : {
+                    "stored" : true,
+                    "tv" : true
+                }
+            }
+        }
+    },
+    "mappings" : {
+        "search_keyword" : {
+            "_id" : {
+                "index" : "not_analyzed",
+                "path" : "keyword_id"
+            },
+            "_source" : {
+                "enabled" : "true"
+            },
+            "_all" : {
+                "enabled" : "false"
+            },
+            "analyzer" : "ngram_analyzer",
+            "index_analyzer" : "ngram_analyzer",
+            "search_analyzer" : "ngram_analyzer",
+            "properties" : {
+                "keyword_id" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false},
+                "keyword" : {
+                    "type" : "string", "store" : "no", "index" : "analyzed", "omit_norms" : true, "index_options" : "offsets", "term_vector" : "with_positions_offsets", "include_in_all" : false,
+                    "fields" : {
+                        "keyword_prefix" : {"type" : "string", "store" : "no", "index" : "not_analyzed", "omit_norms" : true, "index_options" : "offsets", "term_vector" : "with_positions_offsets", "include_in_all" : false},
+                        "keyword_edge" : {"index_analyzer" : "edge_ngram_analyzer", "type" : "string", "store" : "no", "index" : "analyzed", "omit_norms" : true, "index_options" : "offsets", "term_vector" : "with_positions_offsets", "include_in_all" : false},
+                        "keyword_edge_back" : {"index_analyzer" : "edge_ngram_analyzer_back", "type" : "string", "store" : "no", "index" : "analyzed", "omit_norms" : true, "index_options" : "offsets", "term_vector" : "with_positions_offsets", "include_in_all" : false}
+                    }
+                },
+                "keyword_ranking" : {"type" : "long", "store" : "no", "index" : "not_analyzed", "index_options" : "docs", "ignore_malformed" : true, "include_in_all" : false}
+            }
+        }
+    }
+}

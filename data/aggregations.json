@@ -1,0 +1,42 @@
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 1, item_code: "A1", item_name: "자전거 트레일러", item_category: "1A", buyer_id: "henry", buyer_gender: "M", buyer_location: { "location" : "35.907757,127.76692200000002" }, buyer_country: "KR", payment_price: 175000, payment_type: "card", payment_time: "20140601163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 2, item_code: "A1", item_name: "자전거 트레일러", item_category: "1A", buyer_id: "atie", buyer_gender: "F", buyer_location: { "location" : "37.09024,-95.71289100000001" }, buyer_country: "US", payment_price: 175000, payment_type: "bank", payment_time: "20140602163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 3, item_code: "A2", item_name: "킥 스텐드", item_category: "2A", buyer_id: "hana", buyer_gender: "F", buyer_location: { "location" : "35.86166,104.19539699999996" }, buyer_country: "CN", payment_price: 25000, payment_type: "phone", payment_time: "20140603163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 4, item_code: "A2", item_name: "킥 스텐드", item_category: "2A", buyer_id: "ray", buyer_gender: "F", buyer_location: { "location" : "36.204824,138.252924" }, payment_price: 25000, payment_type: "pay8", payment_time: "20140604163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 5, item_code: "A3", item_name: "쿨 매트", item_category: "3A", buyer_id: "veritas", buyer_gender: "M", buyer_location: { "location" : "41.87194,12.567379999999957" }, buyer_country: "IT", payment_price: 199000, payment_type: "card", payment_time: "20140605163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 6, item_code: "A3", item_name: "쿨 매트", item_category: "3A", buyer_id: "spark", buyer_gender: "M", buyer_location: { "location" : "46.227638,2.213749000000007" }, buyer_country: "FR", payment_price: 199000, payment_type: "phone", payment_time: "20140606163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 7, item_code: "A3", item_name: "쿨 매트", item_category: "3A", buyer_id: "jjeong", buyer_gender: "M", buyer_location: { "location" : "52.3555177,-1.1743197000000691" }, buyer_country: "GB", payment_price: 199000, payment_type: "bank", payment_time: "20140607163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 8, item_code: "A4", item_name: "핸드폰 거치대", item_category: "4A", buyer_id: "director", buyer_gender: "M", buyer_location: { "location" : "45.4408474,12.31551509999997" }, buyer_country: "IT", payment_price: 36500, payment_type: "pay8", payment_time: "20140608163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 9, item_code: "A5", item_name: "순간 접착제", item_category: "5A", buyer_id: "mina", buyer_gender: "F", buyer_location: { "location" : "51.165691,10.451526000000058" }, buyer_country: "DE", payment_price: 3200, payment_type: "card", payment_time: "20140609163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 10, item_code: "A6", item_name: "덧신 양말", item_category: "6A", buyer_id: "suji", buyer_gender: "F", buyer_location: { "location" : "47.516231,14.550072" }, buyer_country: "AT", payment_price: 990, payment_type: "bank", payment_time: "20140610163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 11, item_code: "A7", item_name: "여름용 반바지", item_category: "7A", buyer_id: "john", buyer_gender: "M", buyer_location: { "location" : "40.46366700000001,-3.7492200000000366" }, buyer_country: "ES", payment_price: 19900, payment_type: "phone", payment_time: "20140611163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 12, item_code: "A8", item_name: "자전거 안전모", item_category: "8A", buyer_id: "henry", buyer_gender: "M", buyer_location: { "location" : "49.81749199999999,15.472962000000052" }, buyer_country: "CZ", payment_price: 39900, payment_type: "pay8", payment_time: "20140612163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 13, item_code: "A8", item_name: "자전거 안전모", item_category: "8A", buyer_id: "hana", buyer_gender: "F", buyer_location: { "location" : "43.73841760000001,7.42461579999997" }, buyer_country: "MC", payment_price: 39900, payment_type: "card", payment_time: "20140613163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 14, item_code: "A8", item_name: "자전거 안전모", item_category: "8A", buyer_id: "atie", buyer_gender: "F", buyer_location: { "location" : "46.818188,8.227511999999933" }, buyer_country: "CH", payment_price: 39900, payment_type: "card", payment_time: "20140614163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 15, item_code: "A8", item_name: "자전거 안전모", item_category: "8A", buyer_id: "ray", buyer_gender: "F", buyer_location: { "location" : "10.3156992,123.88543660000005" }, buyer_country: "PH", payment_price: 39900, payment_type: "cash", payment_time: "20140615163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 16, item_code: "A9", item_name: "라이딩 반바지", item_category: "9A", buyer_id: "bodong", buyer_gender: "F", buyer_location: { "location" : "7.981045799999999,98.36388339999996" }, buyer_country: "TH", payment_price: 89000, payment_type: "cash", payment_time: "20140616163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 17, item_code: "B1", item_name: "라이딩 반장갑", item_category: "1B", buyer_id: "henry", buyer_gender: "M", buyer_location: { "location" : "22.198745,113.54387300000008" }, buyer_country: "MO", payment_price: 26500, payment_type: "cash", payment_time: "20140617163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 18, item_code: "B1", item_name: "라이딩 반장갑", item_category: "1B", buyer_id: "atie", buyer_gender: "F", buyer_location: { "location" : "22.396428,114.10949700000003" }, buyer_country: "HK", payment_price: 26500, payment_type: "pay8", payment_time: "20140618163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 19, item_code: "B1", item_name: "라이딩 반장갑", item_category: "1B", buyer_id: "jjeong", buyer_gender: "M", buyer_location: { "location" : "13.444304,144.79373099999998" }, buyer_country: "GU", payment_price: 26500, payment_type: "bank", payment_time: "20140619163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 20, item_code: "B2", item_name: "슈퍼 줌 렌즈", item_category: "2B", buyer_id: "henry", buyer_gender: "M", buyer_location: { "location" : "15.177801,145.75096699999995" }, buyer_country: "MP", payment_price: 510250, payment_type: "card", payment_time: "20140620163000"}
+{ "index" : { "_index" : "aggregations", "_type" : "transactions" } }
+{ tx_id: 21, item_code: "B2", item_name: "슈퍼 줌 렌즈", item_category: "2B", buyer_id: "jjeong", buyer_gender: "M", buyer_location: { "location" : "23.69781,120.96051499999999" }, buyer_country: "TW", payment_price: 510250, payment_type: "pay8", payment_time: "20140621163000"}
